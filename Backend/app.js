@@ -3,6 +3,7 @@ require('dotenv').config()
 const morgan = require('morgan');
 const bodyParser=require('body-parser');
 const db = require('./db/database')
+const categoryRoute = require('./routes/categoryRoute')
 
 
 
@@ -15,8 +16,11 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 //routes
-app.use('/api',categoryRoute);
+app.use('/api',categoryRoute)
 
+
+
+//PORT Configuration 
 const port = process.env.PORT || 5000
 
 //Server 
