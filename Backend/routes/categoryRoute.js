@@ -1,19 +1,18 @@
-const express=require('express');
-const { postCategory, findCategory } = require('../controller/category');
+const express = require('express');
+const { postCategory, categoryById, readCategory, deleteCategory, updateCategory, findCategory } = require('../controller/category');
+const { requireSignIn, isAdmin, UserById } = require('../controller/user')
 const router = express.Router();
 
 
-//Routes
+router.post('/postcategory/:userId', requireSignIn, isAdmin, postCategory)
+router.param('categoryId', categoryById)
 
-router.post('/postcategory',postCategory);  //To post Category
+router.get('/singlecategory/:categoryId', readCategory)
+router.delete('/deletecategory/:categoryId/:userId', requireSignIn, isAdmin, deleteCategory)
+router.put('/updatecategory/:categoryId/:userId', requireSignIn, isAdmin, updateCategory)
 
-router.get('/showcategory',findCategory)  //To Show All Categories
+router.get('/showcategory', findCategory)
 
+router.param('userId', UserById)
 
-
-
-
-
-
-//Exporting Express Router 
-module.exports=router;
+module.exports = router;
