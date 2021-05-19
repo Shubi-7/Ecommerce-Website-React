@@ -1,47 +1,71 @@
-import React,{useState} from 'react'
-import { Link } from 'react-router-dom'
-import Footer from '../layouts/Footer'
-import Navbar from '../layouts/Navbar'
-import {signup} from './index'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+import Footer from '../layouts/Footer';
+import Navbar from '../layouts/Navbar';
 
-const Signup = () => {
+
+const Resetpassword = ({ match }) => {
 
     const [values, setValues] = useState({
-        name: '', email: '', password: '', error: '', success: false
-    })
-    const { name, email, password, error, success } = values
+        email: '', password: '', cpassword: '', error: '', success: false
+    });
+
+    const { email, password, cpassword, success, error } = values;
 
     const handleChange = name => event => {
-        setValues({ ...values, [name]: event.target.value })
+        setValues({ ...values, error: false, [name]: event.target.value });
     }
 
-    const clickSubmit = event => {
-        event.preventDefault()
-        setValues({ ...values, error: false })
-        signup({ name, email, password })
+    const clickSubmit = (event) => {
+        event.preventDefault();
+
+        setValues({ ...values, error: false });
+        const token = match.params.token
+
+        fetch(`http://localhost:5000/api/resetpassword/${token}`, {
+            method: "PUT",
+            headers: {
+                Accept: 'application/json',
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(values)
+        })
+            .then(res => res.json())
             .then(data => {
+
                 if (data.error) {
                     setValues({ ...values, error: data.error, success: false })
                 }
                 else {
-                    setValues({ ...values, name: '', email: '', password: '', error: '', success: true })
+                    setValues({
+                        ...values,
+                        error: '', success: true
+                    })
                 }
-            })
-    }
-    //to show success message
-    const showSuccessMsg = () => (
-        <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
-            <h5>Account has been created, verify your accouny before login</h5>
-        </div>
-    )
 
-    //to show error message
-    const showErrorMsg = () => (
+
+            })
+            .catch(err => console.log(err))
+
+
+    }
+
+
+    const showError = () => (
+
         <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
             {error}
         </div>
-    )
 
+    );
+
+    const showSuccess = () => (
+
+        <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
+            Password has been reset successfully you can login to continue
+        </div>
+
+    );
     return (
         <>
             <Navbar />
@@ -61,28 +85,26 @@ const Signup = () => {
                 </div>
             </div>
 
-            {/* <div className="section">
+            <div className="section">
                 <div className="container">
                     <div className="row">
                     </div>
                 </div>
             </div>
- */}
+
 
             <div className="container mycus">
                 <div className="row">
                     <form className="form-signin">
-                        <h1 className="h3 mb-3 font-weight-normal">Register</h1>
-                        {showErrorMsg()}
-                        {showSuccessMsg()}
-                        <label for="inputuserName" className="sr-only">UserName</label>
-                        <input type="textbox" name="Username" className="form-control" placeholder="Username" onChange={handleChange('name')} value={name} />
+                        <h1 className="h3 mb-3 font-weight-normal">Reset Password</h1>
+                        {showError()}
+                        {showSuccess()}
                         <label for="inputEmail" className="sr-only">Email address</label>
                         <input type="email" name="Email" className="form-control" placeholder="Email address" onChange={handleChange('email')} value={email} />
                         <label for="inputPassword" className="sr-only">Password</label>
                         <input type="password" name="password" className="form-control" placeholder="Password" onChange={handleChange('password')} value={password} />
                         <label for="inputC_Password" className="sr-only">ConfirmPassword</label>
-                        <input type="password" name="Confirm Password" className="form-control" placeholder="Confirm Password" required />
+                        <input type="password" name="ConfirmPassword" className="form-control" placeholder="Confirm Password" onChange={handleChange('cpassword')} value={cpassword} />
                         <div className="checkbox mb-3">
                         </div>
                         <button className="btn btn-lg btn-danger btn-block" onClick={clickSubmit}>SignUp</button>
@@ -92,9 +114,8 @@ const Signup = () => {
 
             <Footer />
 
-
         </>
     )
 }
 
-export default Signup
+export default Resetpassword
