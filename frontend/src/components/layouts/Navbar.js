@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import {signout, isAuthenticated} from '../auth'
-import { itemTotal } from '../pages/cartApi'
+import Search from '../pages/Search'
 
 const Navbar = ({history}) => {
     return (
@@ -71,18 +71,12 @@ const Navbar = ({history}) => {
                             </div>
 
                             <div className="col-md-6">
-                                <div className="header-search">
-                                    <form>
-                                        <select className="input-select">
-                                            <option value="0">All Categories</option>
-                                            <option value="1">Category 01</option>
-                                            <option value="1">Category 02</option>
-                                        </select>
-                                        <input className="input" placeholder="Search here" />
-                                        <button className="search-btn">Search</button>
-                                    </form>
-                                </div>
-                            </div>
+                            <div className="header-search">
+
+                           <Search/>
+
+                           </div>
+                           </div>
 
                             <div className="col-md-3 clearfix">
                                 <div className="header-ctn">
