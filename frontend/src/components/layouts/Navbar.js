@@ -65,7 +65,7 @@ const Navbar = ({history}) => {
                             <div className="col-md-3">
                                 <div className="header-logo">
                                     <Link to="/" className="logo">
-                                        <img src="img/logo.png" alt="" />
+                                        <img src="/img/logo.png" alt="" />
                                     </Link>
                                 </div>
                             </div>

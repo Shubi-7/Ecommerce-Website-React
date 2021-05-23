@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../layouts/Footer';
 import Navbar from '../layouts/Navbar';
 import { getCart } from './cartApi';
 import CartItem from './CartItem';
@@ -38,7 +39,10 @@ const Cart = () => {
     return (
         <>
             <Navbar />
+            <div className="container">
             {items.length > 0 ? showItems(items) : noItemsMessage()}
+            </div>
+            <Footer/>
 
         </>
     )

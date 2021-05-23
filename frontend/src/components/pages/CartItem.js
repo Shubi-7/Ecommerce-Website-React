@@ -47,10 +47,10 @@ const CartItem = ({ product,
                         </div>
                     </div>
                     <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart" onClick={() => {
+                        <button class="add-to-cart-btn" onClick={() => {
                             removeItem(product._id);
                             setRun(!run); //run useEffect in Parent Cart
-                        }}></i> remove from cart</button>
+                        }}><i class="fa fa-shopping-cart"></i> remove from cart</button>
                     </div>
                 </div>
             </div>

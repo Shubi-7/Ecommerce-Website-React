@@ -13,6 +13,8 @@ import Homepage from './components/pages/Homepage'
 import AddCategory from './components/admin/AddCategory'
 import AddProduct from './components/admin/AddProduct'
 import Cart from './components/pages/Cart'
+import Products from './components/pages/Products'
+import ProductDetails from './components/pages/ProductDetails'
 
 const Routes = () => {
     return (
@@ -21,12 +23,13 @@ const Routes = () => {
             <Switch>
 
             <Route exact path="/" component={Homepage}/>
-
+            <Route exact path="/productdetails/:productId" component={ProductDetails}/>
             <Route exact path="/signin" component={Signin}/>
             <Route exact path="/signup" component={Signup}/>
             <Route exact path="/forget/password" component={Forgetpassword} />
             <Route exact path="/reset/password/:token" component={Resetpassword} />
             <Route exact path="/email/confirmation/:token" component={Confirm}/>
+            <Route exact path="/products" component={Products}/>
             <Route exact path="/cart" component={Cart} />
 
             <PrivateRoute exact path="/user/dashboard" component={UserDashboard} />
